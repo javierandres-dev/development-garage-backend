@@ -1,0 +1,33 @@
+{
+  "name": "development-school-backend",
+  "version": "0.0.1",
+  "description": "School Backend",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "dev": "nodemon",
+    "start": "npm run build && node build/index.js",
+    "build": "rimraf ./build && tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/javierandresgp/development-school-backend.git"
+  },
+  "keywords": [],
+  "author": "Javier Andrés Garzón Patarroyo",
+  "license": "Copyright (c) 2021, Javier Andrés Garzón Patarroyo.  All rights reserved.",
+  "bugs": {
+    "url": "https://github.com/javierandresgp/development-school-backend/issues"
+  },
+  "homepage": "https://github.com/javierandresgp/development-school-backend#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.12",
+    "rimraf": "^3.0.2",
+    "ts-node": "^10.1.0",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "@types/node": "^16.3.3",
+    "express": "^4.17.1"
+  }
+}
