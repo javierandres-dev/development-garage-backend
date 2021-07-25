@@ -54,12 +54,12 @@ verification.use((req: Request, res: Response, next: NextFunction) => {
   try {
     let token: any =
       req.headers["x-access-token"] || req.headers["authorization"];
-    if (!token) throw new Error("Token is mandatory");
+    if (!token) res.status(400).json({ message: "Token is mandatory" });
     else if (token.startsWith("Bearer ")) {
       token = token.slice(7, token.length);
       jwt.verify(token, server.get("key"), (error: any, decoded: object) => {
         if (error) {
-          throw new Error("Invalid token");
+          res.status(400).json({ message: "Invalid token" });
         } else {
           //console.info(decoded);
           //req.decoded = decoded;
