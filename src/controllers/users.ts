@@ -1,7 +1,9 @@
-import { Request, Response } from 'express';
-import User from '../models/Users';
+import { server } from "../server";
+import { Request, Response } from "express";
+import User from "../models/Users";
 
-const bcryptjs = require('bcryptjs');
+const bcryptjs = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 export const saveNewUser = async (req: Request, res: Response) => {
   try {
@@ -12,7 +14,30 @@ export const saveNewUser = async (req: Request, res: Response) => {
     });
     const userCreated = await newUser.save();
     if (userCreated) res.status(200).json({ result: userCreated });
-    else throw new Error('User not created');
+    else res.status(400).json({ message: "User not created" });
+  } catch (err) {
+    res.status(err).json(err);
+  }
+};
+
+export const userLogin = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findOne({ username: req.body.username });
+    if (user) {
+      if (await bcryptjs.compare(req.body.password, user.password)) {
+        const payload = {
+          check: true,
+        };
+        const token = jwt.sign(payload, server.get("key"), {
+          expiresIn: "86400000",
+        });
+        res.status(200).json({ result: token });
+      } else {
+        res.status(400).json({ message: "Incorrect username and/or password" });
+      }
+    } else {
+      res.status(400).json({ message: "Incorrect username and/or password" });
+    }
   } catch (err) {
     res.status(err).json(err);
   }
@@ -22,7 +47,7 @@ export const findAllUsers = async (req: Request, res: Response) => {
   try {
     const allUsers = await User.find();
     if (allUsers) res.status(200).json({ result: allUsers });
-    else throw new Error('Users not found');
+    else res.status(400).json({ message: "Users not found" });
   } catch (err) {
     res.status(err).json(err);
   }
@@ -33,7 +58,7 @@ export const findOneUser = async (req: Request, res: Response) => {
     const userId = req.params.id;
     const userFound = await User.findById(userId);
     if (userFound) res.status(200).json({ result: userFound });
-    else throw new Error('User not found');
+    else res.status(400).json({ message: "User not found" });
   } catch (err) {
     res.status(err).json(err);
   }
@@ -43,8 +68,8 @@ export const updateOneUser = async (req: Request, res: Response) => {
   try {
     const previousUser = await User.findByIdAndUpdate(req.params.id, req.body);
     if (previousUser)
-      res.status(200).json({ message: 'Updated user', userId: req.params.id });
-    else throw new Error('User not updated');
+      res.status(200).json({ message: "Updated user", userId: req.params.id });
+    else res.status(400).json({ message: "User not updated" });
   } catch (err) {
     res.status(err).json(err);
   }
@@ -53,8 +78,8 @@ export const updateOneUser = async (req: Request, res: Response) => {
 export const deleteOneUser = async (req: Request, res: Response) => {
   try {
     const user = await User.findByIdAndDelete(req.params.id);
-    if (user) res.status(200).json({ message: 'User deleted' });
-    else throw new Error('User not deleted');
+    if (user) res.status(200).json({ message: "User deleted" });
+    else res.status(400).json({ message: "User not deleted" });
   } catch (err) {
     res.status(err).json(err);
   }
