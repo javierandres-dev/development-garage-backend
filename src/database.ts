@@ -1,18 +1,18 @@
 import mongoose from 'mongoose';
 import config from './config';
 
-const url: any = config.mongodbURL;
-
 export const database = async () => {
   try {
-    const db = await mongoose.connect(url, {
+    const db = await mongoose.connect(config.mongodbURL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false,
       useCreateIndex: true,
     });
-    console.info(`Connected to database: ${db.connection.name}`);
+    if (db.connection.name)
+      console.info(`Connected to database: ${db.connection.name}`);
+    else throw new Error('Not connected to database');
   } catch (err) {
-    console.error('Not connected to database.  Error: ', err);
+    console.error(err);
   }
 };

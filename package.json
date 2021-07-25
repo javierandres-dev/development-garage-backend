@@ -1,7 +1,7 @@
 {
-  "name": "development-school-backend",
+  "name": "development-garage-backend",
   "version": "0.0.1",
-  "description": "School Backend",
+  "description": "Garage Backend",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/javierandresgp/development-school-backend.git"
+    "url": "git+https://github.com/javierandresgp/development-garage-backend.git"
   },
   "keywords": [],
   "author": "Javier Andrés Garzón Patarroyo",
   "license": "Copyright (c) 2021, Javier Andrés Garzón Patarroyo.  All rights reserved.",
   "bugs": {
-    "url": "https://github.com/javierandresgp/development-school-backend/issues"
+    "url": "https://github.com/javierandresgp/development-garage-backend/issues"
   },
-  "homepage": "https://github.com/javierandresgp/development-school-backend#readme",
+  "homepage": "https://github.com/javierandresgp/development-garage-backend#readme",
   "devDependencies": {
     "morgan": "^1.10.0",
     "nodemon": "^2.0.12",
@@ -30,10 +30,12 @@
   "dependencies": {
     "@types/express": "^4.17.13",
     "@types/node": "^16.3.3",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-validator": "^6.12.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.3"
   }
 }
